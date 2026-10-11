@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
-import Body from './Body.jsx';
+import { useState, useEffect } from "react";
+import Body from "./Body.jsx";
 export default function Catalog() {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
-  const BACKEND_URL = 'http://localhost:5000';
+  const BACKEND_URL = import.meta.env.VITE_API_URL;
   useEffect(() => {
     const fetchBooks = async () => {
       try {
@@ -12,7 +12,7 @@ export default function Catalog() {
         setBooks(Array.isArray(data) ? data : []);
         setLoading(false);
       } catch (error) {
-        console.error('Error fetching live catalog:', error);
+        console.error("Error fetching live catalog:", error);
         setLoading(false);
       }
     };
@@ -31,12 +31,16 @@ export default function Catalog() {
   }
 
   return (
-    <div className='container mt-4'>
-      <h2 className="text-center mb-4 text-primary fw-bold">Live Library Catalog</h2>
+    <div className="container mt-4">
+      <h2 className="text-center mb-4 text-primary fw-bold">
+        Live Library Catalog
+      </h2>
       {books.length === 0 ? (
-        <p className="text-center text-muted">No books found in the library database.</p>
+        <p className="text-center text-muted">
+          No books found in the library database.
+        </p>
       ) : (
-        <Body courses={books} /> 
+        <Body courses={books} />
       )}
     </div>
   );
