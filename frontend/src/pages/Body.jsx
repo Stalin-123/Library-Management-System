@@ -1,4 +1,3 @@
-import React from 'react';
 import Card1 from './Card1.jsx';
 
 export default function Body({ courses }) {

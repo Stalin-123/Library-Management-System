@@ -3,11 +3,11 @@ export default function About(){
     return(
         <div className="container">
             <h1 className="text-primary mt-3">About us</h1>
-            <div className="row mb-9 p-4">
-                <div className="col-7">
-                    <img src={image} className="borderRadius-5 flex img-fluid w-0 rounded-5"></img>
+            <div className="row g-4 mb-4 p-2 align-items-center">
+                <div className="col-md-6">
+                    <img src={image} className="img-fluid w-100 rounded-4 shadow-sm" alt="Shelves of books in the library" />
                 </div>
-                <div className="col-5 mb-9">
+                <div className="col-md-6">
                     <h3>
                         Empowering Minds Through Academic Resources
                     </h3>
@@ -17,7 +17,7 @@ export default function About(){
                 </div>
             </div>
             <div className='row mb-5 mt-5'>
-              <div className='col-md-3'>
+              <div className='col-12 col-sm-6 col-xl-3 mb-3'>
               <div className='card bg-primary text-white shadow h-100'>
                 <div className='card-body'>
                     <h5>Rich Catalog</h5>
@@ -25,7 +25,7 @@ export default function About(){
                 </div>
               </div>
               </div>
-              <div className='col-md-3'>
+              <div className='col-12 col-sm-6 col-xl-3 mb-3'>
               <div className='card bg-success text-white shadow'>
                 <div className='card-body'>
                   <h5>Digital Tracking</h5>
@@ -33,15 +33,15 @@ export default function About(){
                 </div>
               </div>
               </div>
-              <div className='col-md-3'>
-              <div className='card bg-warning text-white shadow'>
+              <div className='col-12 col-sm-6 col-xl-3 mb-3'>
+              <div className='card bg-warning text-dark shadow'>
                 <div className='card-body'>
                   <h5>Seamless Returns</h5>
                   <p>Easy book renewals and immediate checkout updates.</p>
                 </div>
               </div>
               </div>
-              <div className='col-md-3'>
+              <div className='col-12 col-sm-6 col-xl-3 mb-3'>
               <div className='card bg-danger text-white shadow'>
                 <div className='card-body'>
                   <h5>Overdue Alerts</h5>

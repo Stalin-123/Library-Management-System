@@ -1,4 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+
+const BACKEND_URL = 'http://localhost:5000';
+
+const requestBooks = async () => {
+    const response = await fetch(`${BACKEND_URL}/api/books`);
+    return response.json();
+};
 
 export default function BookList() {
     const [books, setBooks] = useState([]);
@@ -6,21 +13,34 @@ export default function BookList() {
     const [editingId, setEditingId] = useState(null);
     const [editForm, setEditForm] = useState({ title: '', author: '', isbn: '', totalCopies: '' });
     
-    const BACKEND_URL = 'http://localhost:5000'; 
-    
-    useEffect(() => {
-        fetchBooks();
-    }, []);
-
-    const fetchBooks = async () => {
+    const fetchBooks = useCallback(async () => {
         try {
-            const response = await fetch(`${BACKEND_URL}/api/books`); 
-            const data = await response.json();
+            const data = await requestBooks();
             setBooks(Array.isArray(data) ? data : []);
         } catch (error) {
             console.error('Error fetching books:', error);
         }
-    };
+    }, []);
+
+    useEffect(() => {
+        let cancelled = false;
+        const loadBooks = async () => {
+            try {
+                const data = await requestBooks();
+                if (!cancelled) {
+                    setBooks(Array.isArray(data) ? data : []);
+                }
+            } catch (error) {
+                if (!cancelled) {
+                    console.error('Error fetching books:', error);
+                }
+            }
+        };
+        loadBooks();
+        return () => {
+            cancelled = true;
+        };
+    }, []);
 
     const startEdit = (book) => {
         setEditingId(book._id);
@@ -103,7 +123,7 @@ export default function BookList() {
                 />
             </div>
             <div className="card p-3 shadow-sm">
-    <div style={{ maxHeight: '400px', overflowY: 'auto', position: 'relative' }}>
+    <div style={{ maxHeight: '400px', overflowX: 'auto', overflowY: 'auto', position: 'relative' }}>
         
         <table className="table table-hover align-middle mb-0">
             {/* Opaque Sticky Header Row */}

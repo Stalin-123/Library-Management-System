@@ -1,5 +1,3 @@
-import React from 'react';
-
 export default function Card1({ name, des, id1, available, total }) {
   const isAvailable = available > 0;
 

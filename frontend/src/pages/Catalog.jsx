@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Body from './Body.jsx';
 export default function Catalog() {
   const [books, setBooks] = useState([]);

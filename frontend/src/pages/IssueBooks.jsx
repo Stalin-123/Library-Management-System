@@ -1,32 +1,60 @@
-import React, { useState, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+
+const BACKEND_URL = 'http://localhost:5000';
+
+const requestBooks = async () => {
+    const response = await fetch(`${BACKEND_URL}/api/books`);
+    return response.json();
+};
+
+const requestIssues = async () => {
+    const response = await fetch(`${BACKEND_URL}/api/books/issues`);
+    return response.json();
+};
 
 export default function IssueBooks() {
     const [books, setBooks] = useState([]);
     const [issues, setIssues] = useState([]);
     const [formData, setFormData] = useState({ bookId: '', studentName: '', studentId: '' });
     
-    const BACKEND_URL = 'http://localhost:5000'; 
-
-    useEffect(() => {
-        fetchBooks();
-        fetchIssues();
-    }, []);
-
-    const fetchBooks = async () => {
+    const fetchBooks = useCallback(async () => {
         try {
-            const res = await fetch(`${BACKEND_URL}/api/books`);
-            const data = await res.json();
+            const data = await requestBooks();
             setBooks(Array.isArray(data) ? data : []);
         } catch (err) { console.error("Error fetching books:", err); }
-    };
+    }, []);
 
-    const fetchIssues = async () => {
+    const fetchIssues = useCallback(async () => {
         try {
-            const res = await fetch(`${BACKEND_URL}/api/books/issues`); 
-            const data = await res.json();
+            const data = await requestIssues();
             setIssues(Array.isArray(data) ? data : []);
         } catch (err) { console.error("Error fetching issues:", err); }
-    };
+    }, []);
+
+    useEffect(() => {
+        let cancelled = false;
+        const loadBooks = async () => {
+            try {
+                const data = await requestBooks();
+                if (!cancelled) setBooks(Array.isArray(data) ? data : []);
+            } catch (err) {
+                if (!cancelled) console.error("Error fetching books:", err);
+            }
+        };
+        const loadIssues = async () => {
+            try {
+                const data = await requestIssues();
+                if (!cancelled) setIssues(Array.isArray(data) ? data : []);
+            } catch (err) {
+                if (!cancelled) console.error("Error fetching issues:", err);
+            }
+        };
+        loadBooks();
+        loadIssues();
+        return () => {
+            cancelled = true;
+        };
+    }, []);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.id]: e.target.value });

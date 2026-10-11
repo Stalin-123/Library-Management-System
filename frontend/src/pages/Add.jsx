@@ -47,7 +47,7 @@ export default function Add(){
     return(
         <div className="container d-flex flex-column justify-content-center align-items-center mt-5" >
             <h1 style={{textAlign:'center',margin:'5px',marginBotton:'9px'}}>Add a new book to library</h1>
-            <div className="card p-3 w-50 shadow-sm" style={{marginTop:'10px'}}>
+            <div className="card add-book-card p-3 w-100 shadow-sm" style={{marginTop:'10px'}}>
             <form onSubmit={handleSubmit}>
             <label className="form-label" htmlFor="title">Book Name</label>
             <input type='text' id='title' onChange={handleChange} value={details.title} className="form-control mb-2" placeholder="Enter the title of the book" required/>
@@ -57,7 +57,7 @@ export default function Add(){
             <input type='text'  onChange={handleChange} id='isbn' className="form-control mb-2" placeholder="Enter the ISBN number of the book" required/>
             <label className="form-label" htmlFor="totalCopies">Total books</label>
             <input type='number' onChange={handleChange} id='totalCopies' className="form-control mb-2" placeholder="Enter the totalCopies of the book" required/>
-            <button type='submit' className="btn btn-primary p-2 m-2 w-25">Add Book</button>
+            <button type='submit' className="btn btn-primary p-2 m-2 w-100">Add Book</button>
             </form>
             </div>
         </div>
